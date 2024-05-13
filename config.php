@@ -14,7 +14,7 @@
 </head>
  
 <body>
-    <h1>Marlboro 😁👍</h1>
+    <h1>conf fail 😁👍</h1>
 
 
 
@@ -35,6 +35,13 @@ $yhendus = mysqli_connect($db_server, $db_kasutaja, $db_salasona, $db_andmebaas)
 if(!$yhendus){
 	die('Ei saa ühendust andmebaasiga');
 }
+
+
+
+
+
+
+
 
 ?>
 
