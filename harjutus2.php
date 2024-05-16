@@ -33,7 +33,7 @@ include('config.php');
             $sisestus = $_GET['s'];
 
             $sql = "SELECT artist, album FROM albumid WHERE artist LIKE '%$sisestus%' OR album LIKE '%$sisestus%'";
-            $result = $yhendus->query($sql);
+            $result = $sqluhendus->query($sql);
 
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
@@ -52,7 +52,7 @@ include('config.php');
         $start = 0;
         while (true) {
             $sql = "SELECT * FROM albumid LIMIT $start, 10";
-            $result = $yhendus->query($sql);
+            $result = $sqluhendus->query($sql);
 
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
@@ -76,7 +76,7 @@ include('config.php');
         <h1>Artist ja album, kasvav artisti järgi (10 rida)</h1>
         <?php
         $sql = "SELECT artist, album FROM albumid ORDER BY artist ASC LIMIT 10";
-        $result = $yhendus->query($sql);
+        $result = $sqluhendus->query($sql);
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -90,7 +90,7 @@ include('config.php');
         <h1>Artist ja album, aasta 2010 ja uuemad</h1>
         <?php
         $sql = "SELECT artist, album, aasta FROM albumid WHERE aasta >= 2010";
-        $result = $yhendus->query($sql);
+        $result = $sqluhendus->query($sql);
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -107,9 +107,9 @@ include('config.php');
         $keskmine = "SELECT AVG(hind) AS keskmine FROM albumid";
         $kokku = "SELECT SUM(hind) AS koguvaartus FROM albumid";
 
-        $andmedd = $yhendus->query($andmed);
-        $keskmine_t = $yhendus->query($keskmine);
-        $kokku = $yhendus->query($kokku);
+        $andmedd = $sqluhendus->query($andmed);
+        $keskmine_t = $sqluhendus->query($keskmine);
+        $kokku = $sqluhendus->query($kokku);
 
         if ($andmedd && $keskmine_t && $kokku) {
             $album = $andmedd->fetch_assoc();
@@ -127,7 +127,7 @@ include('config.php');
         <h1>kõige vanema albmum </h1>
         <?php
         $sql = "SELECT album, aasta FROM albumid ORDER BY aasta ASC LIMIT 1";
-        $result = $yhendus->query($sql);
+        $result = $sqluhendus->query($sql);
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -143,8 +143,8 @@ include('config.php');
         $keskmain = "SELECT AVG(hind) AS keskmain FROM albumid";
         $sql = "SELECT artist, album FROM albumid WHERE hind > ($keskmain)";
 
-        $kesksuur = $yhendus->query($keskmain);
-        $sqlsuur = $yhendus->query($sql);
+        $kesksuur = $sqluhendus->query($keskmain);
+        $sqlsuur = $sqluhendus->query($sql);
 
 
         if ($kesksuur && $sqlsuur) {
@@ -171,7 +171,7 @@ include('config.php');
         
 
         <?php
-        $yhendus->close();
+        $sqluhendus->close();
         ?>
 
 

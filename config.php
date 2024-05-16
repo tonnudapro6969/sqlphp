@@ -30,9 +30,9 @@ $db_andmebaas = 'muusikapood';
 $db_kasutaja = 'tonis';
 $db_salasona = 'tonis';
 //ühendus andmebaasiga
-$yhendus = mysqli_connect($db_server, $db_kasutaja, $db_salasona, $db_andmebaas);
+$sqluhendus = mysqli_connect($db_server, $db_kasutaja, $db_salasona, $db_andmebaas);
 //ühenduse kontroll
-if(!$yhendus){
+if(!$sqluhendus){
 	die('Ei saa ühendust andmebaasiga');
 }
 
