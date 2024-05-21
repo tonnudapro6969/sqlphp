@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="et">
  
@@ -10,40 +11,72 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     
-    <title>Harjutus 01</title>
+    <title>harjutus 3</title>
 </head>
- 
 <body>
-    <h1>conf fail 😁👍</h1>
-
-
-
-
-
-
-
-    <?php
-//***protseduuriline***//
-//sinu andmed
-$db_server = 'localhost';
-$db_andmebaas = 'muusikapood tonis';
-$db_kasutaja = 'tonis';
-$db_salasona = 'tonis';
-//ühendus andmebaasiga
-$sqluhendus = mysqli_connect($db_server, $db_kasutaja, $db_salasona, $db_andmebaas);
-//ühenduse kontroll
-if(!$sqluhendus){
-	die('Ei saa ühendust andmebaasiga');
-}
-
-
-
-
-
+<?php
+include('config.php');
 
 
 
 ?>
+<body>
+        
+
+<?php
+
+        
+
+        $sql = "SELECT kliendid.first_name, kliendid.last_name, kliendid.phone_number, arved.kogus FROM kliendid INNER JOIN arved ON arved.kliendid_id = kliendid.id INNER JOIN albumid ON arved.albumid_id = albumid.id";
+        $result = $sqluhendus->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                
+                echo "Klient: " . $row["first_name"] . " " . $row["last_name"] . " " . $row["phone_number"] . " | Album: " . $row["albumid_id"] . " | Kogus: " . $row["kogus"] . "<br>";
+            }
+        }
+
+        
+    
+
+
+
+
+
+
+
+
+        $sqluhendus->close();
+        ?>
+    
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
  
