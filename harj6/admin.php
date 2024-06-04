@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+if (!isset($_SESSION['tuvastamine'])) {
     header("Location: login.php");
     exit;
 }
-
+var_dump($_SESSION);
 include("config.php");
 ?>
 
@@ -15,51 +15,81 @@ include("config.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="admin.php">admin</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.php">index</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="uudis.php">uudised</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="login.php">logis sisse</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="logout.php">logi välja</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
     <div class="container">
-        <h2>Register New User</h2>
-        <form action="#" method="post">
-            <label for="new_username">Uus Kasutajanimi:</label>
-            <input type="text" name="new_username" id="new_username" required><br>
-            <label for="new_parool">Uus Parool:</label>
-            <input type="password" name="new_parool" id="new_parool" required><br>
-            <input type="submit" class="btn btn-success my-2" value="Register">
+    <h2>Registreeri uus kasutaja</h2>        
+        <form action="#" method="get">
+            <label for="username">Kasutajanimi:</label>
+            <input type="text" name="username" id="username" required><br>
+            <label for="parool">Parool:</label>
+            <input type="password" name="parool" id="parool" required><br>
+            <input type="submit" class="btn btn-success my-2" value="Registreeri">
         </form>
 
+    
+    
+
         <?php
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $new_username = htmlspecialchars($_POST["new_username"]);
-            $new_parool = htmlspecialchars($_POST["new_parool"]);
+        if(!empty($_GET['username']) && !empty($_GET['parool'])){
+            $username = htmlspecialchars($_GET["username"]);
+            $parool = htmlspecialchars($_GET["parool"]);
 
-            if (strlen($new_parool) < 8) {
-                echo "Parool peab olema vähemalt 8 tähemärki pikk.";
-            } else {
-                $stmt = $sqluhendus->prepare("SELECT COUNT(*) FROM kasutajad WHERE kasutajanimi = ?");
-                $stmt->bind_param("s", $new_username);
-                $stmt->execute();
-                $stmt->bind_result($count);
-                $stmt->fetch();
-                $stmt->close();
+            $query = "SELECT COUNT(*) as count FROM kasutajad WHERE kasutajanimi = '$username'";
+            $result = $sqluhendus->query($query);
+            $user_count = $result->fetch_assoc()["count"];
 
-                if ($count > 0) {
-                    echo "Kasutajanimi on juba olemas.";
-                } else {
-                    $hashed_parool = password_hash($new_parool, PASSWORD_DEFAULT);
+            if ($user_count > 0) {
+                echo "Kasutajanimi võetud!";
+            } else{
+                if (strlen($parool) < 8) {
+                    echo "8 tähemärki!";
+                } else{
+                    $hashed = password_hash($parool, PASSWORD_DEFAULT);
+                    $lisasql = "INSERT INTO kasutajad (kasutajanimi, kasutajaparool) VALUES ('$username', '$hashed')";
+                    $stmt = $sqluhendus->prepare($lisasql);
 
-                    $stmt = $sqluhendus->prepare("INSERT INTO kasutajad (kasutajanimi, kasutajaparool) VALUES (?, ?)");
-                    $stmt->bind_param("s", $new_username);
-                    $stmt->bind_param("s", $hashed_parool);
-                    if ($stmt->execute()) {
-                        echo "Uus kasutaja edukalt registreeritud.";
-                    } else {
-                        echo "Viga kasutaja registreerimisel.";
-                    }
-                    $stmt->close();
+                    if(password_verify($parool, $hashed)){
+                        if ($sqluhendus->query($lisasql) === TRUE) {
+                            // echo "Korras";
+                            header("Location: admin.php");
+                            exit;
+                        }
+                    }  
                 }
             }
         }
+        ?>
 
+
+        <?php
         $sqluhendus->close();
         ?>
     </div>
