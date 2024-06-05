@@ -26,7 +26,7 @@ session_start();
           <a class="nav-link active" aria-current="page" href="index.php">index</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="uudis.php">uudised</a>
+          <a class="nav-link" href="uudised.php">uudised</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="login.php">logis sisse</a>
@@ -64,8 +64,8 @@ session_start();
             $email = $_GET['email'];
             $sonum = $_GET['sonum'];
 
-            $to = 'mihkelkuusemae06@gmail.com'; 
-            $subject = 'Tagasiside yl7'; 
+            $to = 'tonis.kandmaa@gmail.com'; 
+            $subject = 'midagimidagi ulesanne'; 
             $message = $sonum; 
             $from = 'From: '.$nimi.'<'.$email.'>'; 
 

@@ -30,7 +30,7 @@ include("config.php");
           <a class="nav-link active" aria-current="page" href="index.php">index</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="uudis.php">uudised</a>
+          <a class="nav-link" href="uudised.php">uudised</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="login.php">logis sisse</a>
