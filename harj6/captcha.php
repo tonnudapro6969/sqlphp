@@ -1,3 +1,10 @@
+
+
+
+<?php
+include ("config.php");
+?>
+
 <?php 
 //loome sessiooni ja lisame sinna suvalise arvu 
 session_start(); 
@@ -27,13 +34,23 @@ for ($i=1; $i<=40 ; $i++) {
 } 
 //lisame pildile soovitud parameetrud
 //imagettftext(pilt, teksti_suurus, kalddenurk, x, y, teksti_värv, fondifail, tekst)
-imagettftext($pilt, $teksti_suurus, 0, 10, 25, $teksti_varv, 'font.ttf', $tekst);
+imagettftext($pilt, $teksti_suurus, 0, 10, 25, $teksti_varv, 'OpenSans-ExtraBold.ttf', $tekst);
 imagejpeg($pilt);
 ?>
 
 
-<?php 
-// session_start();
+
+
+
+
+
+
+
+
+
+
+
+<!-- // session_start();
 // //kuni ei ole väljad täidetud, saadame tühja stringi
 // $vnimi="";
 // $vemail="";
@@ -73,21 +90,3 @@ imagejpeg($pilt);
 // 				echo "Turvakood on vale!";
 // 			} 
 // 		}
-// 	} else {
-// 		$error = 'Palun täida kõik väljad!';
-// 	}
-// }
-// ?>
-<!-- <h2>Tagasiside</h2>
-<form action="" method="post">
-	Teie nimi:<br>
-	<input name="nimi" type="text" value="<?php echo $vnimi; ?>"><br>
-	Teie email:<br>
-	<input name="email" type="text" value="<?php echo $vemail; ?>"><br>
-	Sõnum:<br>
-	<textarea cols="30" rows="10" name="sonum"><?php echo $vsonum; ?></textarea><br>
-	<img src="10_captcha.php"><br>
-	Sisesta kood pildilt:<br>
-	<input name="kood" type="text"><br>
-	<input value="saada sõnum" type="submit">
-</form> -->
